@@ -1,13 +1,13 @@
-name: 'Pull request'
+name: "Pull request"
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   pull-request:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout repository'
+      - name: "Checkout repository"
         uses: actions/checkout@v4
       - name: NPM Install
         run: npm ci
