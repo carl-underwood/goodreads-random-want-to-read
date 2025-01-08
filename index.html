@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Goodreads Random Want to Read</title>
+</head>
+
+<body>
+  <main x-data>
+    <h1>Goodreads Random Want to Read</h1>
+    <p>To use, grab an export of your Goodreads library from <a
+        href="https://www.goodreads.com/review/import">https://www.goodreads.com/review/import</a> and select the file
+      here.</p>
+    <input type="file" @change="$store.fileLoadingStore.handleCsvFile($event)" />
+    <template x-if="$store.fileLoadingStore.error">
+      <div>
+        <p x-text="$store.fileLoadingStore.error"></p>
+      </div>
+    </template>
+    <template x-if="$store.wantToReadStore.wantToReadRecords.length">
+      <button @click="$store.wantToReadStore.pickRandomWantToRead" class="btn">Pick another</button>
+    </template>
+    <template x-if="$store.wantToReadStore.randomWantToRead">
+      <div>
+        <p><span x-text="$store.wantToReadStore.randomWantToRead.Title"></span><br /><span
+            x-text="$store.wantToReadStore.randomWantToRead.Author"></span><br /></p>
+      </div>
+    </template>
+  </main>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
