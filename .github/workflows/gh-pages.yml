@@ -32,7 +32,7 @@ jobs:
       - name: Lint
         run: npm run lint
       - name: Build
-        run: npm run build -- --outDir ./_site
+        run: npm run build -- --outDir ./_site --base /goodreads-random-want-to-read
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
