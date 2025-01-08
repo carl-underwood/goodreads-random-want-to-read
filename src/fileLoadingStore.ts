@@ -3,57 +3,68 @@ import { parse } from "csv-parse/browser/esm/sync";
 import Alpine from "alpinejs";
 
 const handleCsvFile = (event: Event) => {
-    Alpine.store("fileLoadingStore").error = null;
+  Alpine.store("fileLoadingStore").error = null;
 
-    if (!event.target) {
-        return;
-    }
+  if (!event.target) {
+    return;
+  }
 
-    const fileInput = event.target as HTMLInputElement;
+  const fileInput = event.target as HTMLInputElement;
 
-    if (!fileInput.files || !fileInput.files.length) {
-        return;
-    }
-    
-    const file = fileInput.files[0];
+  if (!fileInput.files || !fileInput.files.length) {
+    return;
+  }
 
-    if (!file) {
-        return;
-    }
+  const file = fileInput.files[0];
 
-    const fileReader = new FileReader();
+  if (!file) {
+    return;
+  }
 
-    fileReader.addEventListener("load", () => {
-        readCsv(fileReader.result as string);
-    });
+  const fileReader = new FileReader();
 
-    fileReader.readAsText(file);
-}
+  fileReader.addEventListener("load", () => {
+    readCsv(fileReader.result as string);
+  });
+
+  fileReader.readAsText(file);
+};
 
 const readCsv = (csv: string) => {
-    const records = parse(csv, { columns: true, delimiter: "," }) as GoodreadsLibraryItem[];
+  const records = parse(csv, {
+    columns: true,
+    delimiter: ",",
+  }) as GoodreadsLibraryItem[];
 
-    const firstRecordColumns = Object.getOwnPropertyNames(records[0]);
-    
+  const firstRecordColumns = Object.getOwnPropertyNames(records[0]);
 
-    if (expectedColumns.find(expectedColumn => !firstRecordColumns.includes(expectedColumn))) {
-        Alpine.store("fileLoadingStore").error = "Unexpected CSV format!";
-        return;
-    }
-    
-    const wantToReadRecords = records.filter(record => record["Exclusive Shelf"] === "to-read");
-    Alpine.store("wantToReadStore").setWantToReadRecords(wantToReadRecords);
-}
+  if (
+    expectedColumns.find(
+      (expectedColumn) => !firstRecordColumns.includes(expectedColumn),
+    )
+  ) {
+    Alpine.store("fileLoadingStore").error = "Unexpected CSV format!";
+    return;
+  }
 
-const fileLoadingStore: { handleCsvFile: typeof handleCsvFile, error: string | null } = {
-    error: null,
-    handleCsvFile,
+  const wantToReadRecords = records.filter(
+    (record) => record["Exclusive Shelf"] === "to-read",
+  );
+  Alpine.store("wantToReadStore").setWantToReadRecords(wantToReadRecords);
+};
+
+const fileLoadingStore: {
+  handleCsvFile: typeof handleCsvFile;
+  error: string | null;
+} = {
+  error: null,
+  handleCsvFile,
 };
 
 declare module "alpinejs" {
-    interface Stores {
-        "fileLoadingStore": typeof fileLoadingStore;
-    }
+  interface Stores {
+    fileLoadingStore: typeof fileLoadingStore;
+  }
 }
 
 export default fileLoadingStore;

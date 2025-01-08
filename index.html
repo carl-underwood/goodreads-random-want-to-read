@@ -1,42 +1,61 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Goodreads Random Want to Read</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Goodreads Random Want to Read</title>
-</head>
-
-<body>
-  <main class="p-4 prose text-center mx-auto" x-data>
-    <h1>Goodreads Random Want to Read 📚</h1>
-    <p>To use, log in to Goodreads and grab an export of your library from <a
-        href="https://www.goodreads.com/review/import">https://www.goodreads.com/review/import</a> and select the file
-      here.</p>
-    <input x-ref="fileInput" type="file" class="hidden" @change="$store.fileLoadingStore.handleCsvFile($event)" />
-    <template x-if="!$store.wantToReadStore.wantToReadRecords.length">
-      <button class="btn btn-primary" @click="$refs.fileInput.click()">Select library
-        export</button>
-    </template>
-    <template x-if="$store.fileLoadingStore.error">
-      <div>
-        <p x-text="$store.fileLoadingStore.error"></p>
-      </div>
-    </template>
-    <template x-if="$store.wantToReadStore.wantToReadRecords.length">
-      <button @click="$store.wantToReadStore.pickRandomWantToRead" class="btn btn-primary">Pick another</button>
-    </template>
-    <template x-if="$store.wantToReadStore.randomWantToRead">
-      <div>
-        <p>
-          <a x-bind:href="'https://www.goodreads.com/book/show/' + $store.wantToReadStore.randomWantToRead['Book Id']"
-            x-text="$store.wantToReadStore.randomWantToRead.Title" target="_blank"></a><br /><span
-            x-text="$store.wantToReadStore.randomWantToRead.Author"></span><br />
-        </p>
-      </div>
-    </template>
-  </main>
-  <script type="module" src="/src/main.ts"></script>
-</body>
-
+  <body>
+    <main class="p-4 prose text-center mx-auto" x-data>
+      <h1>Goodreads Random Want to Read 📚</h1>
+      <p>
+        To use, log in to Goodreads and grab an export of your library from
+        <a href="https://www.goodreads.com/review/import"
+          >https://www.goodreads.com/review/import</a
+        >
+        and select the file here.
+      </p>
+      <input
+        x-ref="fileInput"
+        type="file"
+        class="hidden"
+        @change="$store.fileLoadingStore.handleCsvFile($event)"
+      />
+      <template x-if="!$store.wantToReadStore.wantToReadRecords.length">
+        <button class="btn btn-primary" @click="$refs.fileInput.click()">
+          Select library export
+        </button>
+      </template>
+      <template x-if="$store.fileLoadingStore.error">
+        <div>
+          <p x-text="$store.fileLoadingStore.error"></p>
+        </div>
+      </template>
+      <template x-if="$store.wantToReadStore.wantToReadRecords.length">
+        <button
+          @click="$store.wantToReadStore.pickRandomWantToRead"
+          class="btn btn-primary"
+        >
+          Pick another
+        </button>
+      </template>
+      <template x-if="$store.wantToReadStore.randomWantToRead">
+        <div>
+          <p>
+            <a
+              x-bind:href="'https://www.goodreads.com/book/show/' + $store.wantToReadStore.randomWantToRead['Book Id']"
+              x-text="$store.wantToReadStore.randomWantToRead.Title"
+              target="_blank"
+            ></a
+            ><br /><span
+              x-text="$store.wantToReadStore.randomWantToRead.Author"
+            ></span
+            ><br />
+          </p>
+        </div>
+      </template>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
