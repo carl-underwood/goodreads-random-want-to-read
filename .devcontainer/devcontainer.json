@@ -3,10 +3,10 @@
 {
   "name": "Node.js & TypeScript",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:24-bookworm",
   "customizations": {
     "vscode": {
-      "extensions": ["esbenp.prettier-vscode"],
+      "extensions": ["esbenp.prettier-vscode", "pflannery.vscode-versionlens"],
       "settings": {
         "[json]": {
           "editor.defaultFormatter": "esbenp.prettier-vscode"
